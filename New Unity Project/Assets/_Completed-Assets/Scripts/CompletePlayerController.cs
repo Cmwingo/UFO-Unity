@@ -12,6 +12,7 @@ public class CompletePlayerController : MonoBehaviour {
 
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
 	private int count;				//Integer to store the number of pickups collected so far.
+    private AudioSource coinSound;
 
 	// Use this for initialization
 	void Start()
@@ -25,8 +26,10 @@ public class CompletePlayerController : MonoBehaviour {
 		//Initialze winText to a blank string since we haven't won yet at beginning.
 		winText.text = "";
 
-		//Call our SetCountText function which will update the text with the current value for count.
-		SetCountText ();
+        coinSound = GetComponent<AudioSource>();
+
+        //Call our SetCountText function which will update the text with the current value for count.
+        SetCountText ();
 	}
 
 	//FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
@@ -51,6 +54,7 @@ public class CompletePlayerController : MonoBehaviour {
 		//Check the provided Collider2D parameter other to see if it is tagged "PickUp", if it is...
 		if (other.gameObject.CompareTag ("PickUp")) 
 		{
+            coinSound.Play();
 			//... then set the other object we just collided with to inactive.
 			other.gameObject.SetActive(false);
 			

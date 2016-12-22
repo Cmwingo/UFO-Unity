@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     private int count;
     public Text countText;
     public Text winText;
+    private AudioSource coinSound;
 
     void Start()
     {
@@ -17,7 +19,9 @@ public class PlayerController : MonoBehaviour {
         count = 0;
         winText.text = "";
         setCountText();
+        coinSound = GetComponent<AudioSource>();
     }
+
 
     void FixedUpdate()
     {
@@ -27,18 +31,34 @@ public class PlayerController : MonoBehaviour {
         rb2d.AddForce(movement * speed);
     }
 
-   
-   
+
+
+    public void Reload()
+    {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+        Time.timeScale = 1;
+    }
+
+
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive (false);
+            coinSound.Play();
             count = count + 1;
             setCountText();
         }
-        
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Reload();
+            print("its working!");
+        }
     }
+
 
     void setCountText()
     {

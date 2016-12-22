@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     public Text winText;
     private AudioSource coinSound;
     private Button reloadButton;
+    private GameObject[] pickUps;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour {
         coinSound = GetComponent<AudioSource>();
         reloadButton = GameObject.FindGameObjectWithTag("Reload").GetComponent<Button>();
         reloadButton.gameObject.SetActive(false);
+        pickUps = GameObject.FindGameObjectsWithTag("PickUp");
     }
 
 
@@ -59,7 +61,11 @@ public class PlayerController : MonoBehaviour {
         if (other.gameObject.CompareTag("Enemy"))
         {
             reloadButton.gameObject.SetActive(true);
-            print("its working!");
+            speed = 0f;
+            foreach(GameObject pickUp in pickUps)
+            {
+                pickUp.SetActive(false);
+            }
         }
     }
 

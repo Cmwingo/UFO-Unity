@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     private int count;
     public Text countText;
     public Text winText;
+    public Text deathText;
     private AudioSource coinSound;
     private Button reloadButton;
     private GameObject[] pickUps;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D> ();
         count = 0;
         winText.text = "";
+        deathText.text = "";
         setCountText();
         coinSound = GetComponent<AudioSource>();
         reloadButton = GameObject.FindGameObjectWithTag("Reload").GetComponent<Button>();
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour {
         {
             reloadButton.gameObject.SetActive(true);
             speed = 0f;
+            deathText.text = "You have died!";
             foreach(GameObject pickUp in pickUps)
             {
                 pickUp.SetActive(false);
@@ -75,6 +78,7 @@ public class PlayerController : MonoBehaviour {
         countText.text = "Count: " + count.ToString();
         if (count >= 16)
         {
+            reloadButton.gameObject.SetActive(true);
             winText.text = "You Win!";
         }
     }

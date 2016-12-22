@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public Text winText;
     private AudioSource coinSound;
+    private Button reloadButton;
 
     void Start()
     {
@@ -20,7 +21,10 @@ public class PlayerController : MonoBehaviour {
         winText.text = "";
         setCountText();
         coinSound = GetComponent<AudioSource>();
+        reloadButton = GameObject.FindGameObjectWithTag("Reload").GetComponent<Button>();
+        reloadButton.gameObject.SetActive(false);
     }
+
 
 
     void FixedUpdate()
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour {
 
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Reload();
+            reloadButton.gameObject.SetActive(true);
             print("its working!");
         }
     }

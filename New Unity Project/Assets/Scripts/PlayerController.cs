@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour {
         if (count >= 16)
         {
             reloadButton.gameObject.SetActive(true);
+            rb2d.velocity = new Vector2(0, 0);
+            speed = 0f;
             winText.text = "You Win!";
         }
     }
